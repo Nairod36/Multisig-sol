@@ -329,30 +329,6 @@ function testExecuteTransactionTwiceSameSignerAndNonSigner() public {
     multiSig.executeTransaction(0);
 }
 
-function testExecuteTransactionTwiceSameSignerAndNonSignerz() public {
-    // 1) Owner1 soumet une transaction
-    vm.prank(owner1);
-    multiSig.submitTransaction(user, 1 ether, "");
-
-    // 2) On confirme avec owner1 et owner2 pour avoir 2 signatures
-    vm.prank(owner1);
-    multiSig.confirmTransaction(0);
-    vm.prank(owner2);
-    multiSig.confirmTransaction(0);
-
-    // 3) Execution par owner3 => réussite
-    vm.prank(owner3);
-    multiSig.executeTransaction(0);
-
-    // 4) Tenter de re- la même TX avec owner1 => "Transaction deja executee."
-   
-
-    // 5) Tenter d’exécuter avec user (non-signer) => "Vous n'etes pas un signataire."
-    vm.prank(user);
-    vm.expectRevert(bytes("Vous n'etes pas un signataire."));
-    multiSig.executeTransaction(0);
-}
-
 }
 
 // Contrat qui va toujours rejeter les transactions entrantes
